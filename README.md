@@ -1,6 +1,5 @@
 # 🌌 Caelestia Helper
 
-[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)  
 [![Arch Linux](https://img.shields.io/badge/OS-Arch%20Linux-lightgrey.svg)](https://archlinux.org/)
 
 Welcome to **Caelestia Helper**, a simple Arch Linux Bash script that automates the installation of all dependencies required for **Caelestia**. 🚀
