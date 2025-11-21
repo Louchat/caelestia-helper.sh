@@ -35,9 +35,9 @@ In short: **it saves you time** and prepares your system to run Caelestia smooth
    git clone <repository-url>
    cd caelestia-helper
 
-Make the script executable:
+    Make the script executable:
 
-   chmod +x caelestia-helper.sh
+chmod +x caelestia-helper.sh
 
 Run the script with sudo:
 
