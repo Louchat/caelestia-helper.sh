@@ -1,71 +1,33 @@
-# 🌌 Caelestia Helper
+Markdown# Caelestia Dotfiles – Quick Setup (Arch Linux)
 
-[![Arch Linux](https://img.shields.io/badge/OS-Arch%20Linux-lightgrey.svg)](https://archlinux.org/)
+This helper script installs all required dependencies so that the caelestia dotfiles can be applied on a fresh minimal Arch installation.
 
-Welcome to **Caelestia Helper**, a simple Arch Linux Bash script that automates the installation of all dependencies required for **Caelestia**. 🚀
+## Requirements
 
----
+- Fresh Arch Linux install (base + base-devel recommended)
+- Working internet connection
+- User with sudo privileges
 
-## 🔍 What is this?
+## Usage
 
-**Caelestia Helper** does the following:
+Run the following commands:
 
-- Installs **application dependencies**:
-  - Editors: `nano`, `vim`, `kate`, `gwenview`
-  - Browsers: `firefox`
-  - Office suite: `libreoffice-fresh`
-  - File managers: `dolphin`, `ark`
-  - Media viewers and utilities: `okular`, `swayimg`, `flatpak`, `discover`
-  - Communication: `discord`
-  - Development tools: `git`, `gcc`, `make`, `cmake`, `curl`, `wget`
-- Installs **service dependencies** (optional):
-  - `bluetooth`, `bluez-utils`, `sddm`
-- Enables selected services automatically.
-- Offers an optional system restart at the end.
+```bash
+# Download and execute (one-liner)
+curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/caelestia-helper.sh | sudo bash
 
-In short: **it saves you time** and prepares your system to run Caelestia smoothly. ⚡
+# Or manually (recommended if you prefer to inspect first):
+wget https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/caelestia-helper.sh
+sudo bash caelestia-helper.sh
+The script will:
 
----
+Update the system
+Install yay if not already present
+Install all required packages from official repositories
+Install required AUR packages
+Show the next commands to clone and apply the dotfiles
 
-## 🛠 How to Use
-
-1. Clone or download this repository:
-   ```bash
-   git clone <repository-url>
-   cd caelestia-helper
-
-    Make the script executable:
-
-chmod +x caelestia-helper.sh
-
-Run the script with sudo:
-
-    sudo ./caelestia-helper.sh
-
-    Follow the interactive prompts:
-
-        Proceed with application dependencies installation.
-
-        Optionally install and enable service dependencies (bluetooth and sddm).
-
-        Optionally restart your system.
-
-⚠️ Requirements
-
-    Arch Linux or an Arch-based distribution.
-
-    Root privileges (sudo) are required.
-
-    Internet connection to download packages.
-
-🎉 After Installation
-
-Once the script finishes:
-
-    All Caelestia dependencies are installed.
-
-    Selected services are enabled.
-
-    Your system is ready to run Caelestia.
-
-Enjoy your new setup! 🌟
+After running the script
+Bashgit clone https://github.com/caelestia-dots/caelestia.git ~/.local/share/caelestia
+~/.local/share/caelestia/install.fish
+That should be all that's needed to get started.
