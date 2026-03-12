@@ -34,7 +34,6 @@ sudo bash caelestia-helper.sh
 ```
 ### Option 3 — Manual
 ```
-
 ```bash
 wget https://raw.githubusercontent.com/Louchat/caelestia-helper.sh/main/caelestia-helper.sh
 chmod +x caelestia-helper.sh
