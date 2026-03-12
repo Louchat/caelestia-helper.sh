@@ -1,88 +1,62 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
-# caelestia-helper.sh
-# Script to install Caelestia dependencies on Arch Linux
-
-# Welcome message
-echo "👋 Welcome to caelestia-helper.sh script!"
-read -p "Do you want to proceed with the installation? [Y/N] " proceed_choice
-
-case "$proceed_choice" in
-    [Yy]* ) 
-        echo "🚀 Starting installation..."
-        ;;
-    [Nn]* )
-        echo "❌ Installation cancelled."
-        exit 0
-        ;;
-    * )
-        echo "⚠️ Invalid response. Exiting."
-        exit 1
-        ;;
-esac
-
-# Check for root
 if [[ $EUID -ne 0 ]]; then
-   echo "❌ This script must be run with sudo or as root."
-   exit 1
+    echo "This script must be run as root (sudo)."
+    exit 1
 fi
 
-echo "🔄 Updating package database..."
+echo "Updating system packages..."
 pacman -Syu --noconfirm
 
-echo "📦 Installing application dependencies..."
+if ! command -v yay >/dev/null 2>&1; then
+    echo "Installing yay (AUR helper)..."
+    pacman -S --needed --noconfirm base-devel git
+    git clone https://aur.archlinux.org/yay.git /tmp/yay
+    cd /tmp/yay
+    sudo -u nobody makepkg -si --noconfirm
+    cd - >/dev/null
+    rm -rf /tmp/yay
+fi
+
+echo "Installing official repository packages..."
 pacman -S --needed --noconfirm \
-  git wget curl gcc make cmake \
-  nano vim fish firefox libreoffice-fresh \
-  gwenview kate dolphin ark okular \
-  flatpak discover discord swayimg
+    hyprland \
+    xdg-desktop-portal-hyprland \
+    xdg-desktop-portal-gtk \
+    wireplumber \
+    foot \
+    fish \
+    fastfetch \
+    btop \
+    jq \
+    eza \
+    inotify-tools \
+    wl-clipboard \
+    cliphist \
+    trash-cli \
+    adw-gtk-theme \
+    papirus-icon-theme \
+    ttf-jetbrains-mono-nerd
 
-echo "✅ App dependencies installation complete."
-read -p "Continue with services dependencies? [Y/N] " choice
+echo "Installing AUR packages..."
+yay -S --needed --noconfirm \
+    hyprpicker-git \
+    app2unit-git \
+    qtengine-git
 
-case "$choice" in
-    [Yy]* )
-        echo "🔧 Installing services dependencies..."
-        pacman -S --needed --noconfirm bluez bluez-utils sddm
-        echo "✅ Services dependencies installed."
+echo ""
+echo "Dependencies installation completed."
+echo ""
+echo "Next steps:"
+echo "  git clone https://github.com/caelestia-dots/caelestia.git ~/.local/share/caelestia"
+echo "  ~/.local/share/caelestia/install.fish"
+echo ""
 
-        read -p "Enable services now? [Y/N] " enable_choice
-        case "$enable_choice" in
-            [Yy]* )
-                echo "⚙️ Enabling services..."
-                systemctl enable bluetooth
-                systemctl enable sddm
-                echo "✅ Services enabled."
-                ;;
-            [Nn]* )
-                echo "⏭️ Skipping service activation."
-                ;;
-            * )
-                echo "⚠️ Invalid response. Services not enabled."
-                ;;
-        esac
-        ;;
-    [Nn]* )
-        echo "⏭️ Skipping services installation."
-        ;;
-    * )
-        echo "⚠️ Invalid response. Skipping services."
-        ;;
-esac
-
-echo
-echo "🎉 Congrats! caelestia-helper.sh successfully installed all dependencies and enabled them."
-read -p "Proceed with restart? [Y/N] " restart_choice
-
-case "$restart_choice" in
-    [Yy]* )
-        echo "🔄 Restarting system..."
-        reboot
-        ;;
-    [Nn]* )
-        echo "⏹️ Restart cancelled. You can reboot manually later."
-        ;;
-    * )
-        echo "⚠️ Invalid response. No restart performed."
-        ;;
-esac
+read -p "Reboot now? [y/N] " reboot_choice
+if [[ "$reboot_choice" =~ ^[Yy]$ ]]; then
+    echo "Rebooting system..."
+    reboot
+else
+    echo "You can reboot later when ready."
+fi
