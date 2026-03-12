@@ -1,5 +1,5 @@
 ```bash
-Markdown# Caelestia Dotfiles – Quick Setup (Arch Linux)
+Caelestia Dotfiles – Quick Setup (Arch Linux)
 
 This helper script installs all required dependencies so that the caelestia dotfiles can be applied on a fresh minimal Arch installation.
 
