@@ -12,8 +12,8 @@ if ! command -v yay >/dev/null 2>&1; then
     echo "Installing yay (AUR helper)..."
 
     sudo pacman -S --needed --noconfirm base-devel git
-
-    WORKDIR=$(mktemp -d)
+    
+WORKDIR=$(sudo -u "$REAL_USER" mktemp -d)
 
     sudo -u "$REAL_USER" git clone https://aur.archlinux.org/yay.git "$WORKDIR/yay"
 
