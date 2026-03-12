@@ -1,26 +1,33 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ $EUID -ne 0 ]]; then
-    echo "This script must be run as root (sudo)."
-    exit 1
-fi
+# Detect the real user (the one who used sudo)
+REAL_USER=${SUDO_USER:-$(whoami)}
 
 echo "Updating system packages..."
-pacman -Syu --noconfirm
+sudo pacman -Syu --noconfirm
 
+# Install yay if not installed
 if ! command -v yay >/dev/null 2>&1; then
     echo "Installing yay (AUR helper)..."
-    pacman -S --needed --noconfirm base-devel git
-    git clone https://aur.archlinux.org/yay.git /tmp/yay
-    cd /tmp/yay
-    sudo -u nobody makepkg -si --noconfirm
+
+    sudo pacman -S --needed --noconfirm base-devel git
+
+    WORKDIR=$(mktemp -d)
+
+    sudo -u "$REAL_USER" git clone https://aur.archlinux.org/yay.git "$WORKDIR/yay"
+
+    cd "$WORKDIR/yay"
+
+    sudo -u "$REAL_USER" makepkg -si --noconfirm
+
     cd - >/dev/null
-    rm -rf /tmp/yay
+
+    rm -rf "$WORKDIR"
 fi
 
 echo "Installing official repository packages..."
-pacman -S --needed --noconfirm \
+sudo pacman -S --needed --noconfirm \
     hyprland \
     xdg-desktop-portal-hyprland \
     xdg-desktop-portal-gtk \
@@ -40,7 +47,7 @@ pacman -S --needed --noconfirm \
     ttf-jetbrains-mono-nerd
 
 echo "Installing AUR packages..."
-yay -S --needed --noconfirm \
+sudo -u "$REAL_USER" yay -S --needed --noconfirm \
     hyprpicker-git \
     app2unit-git \
     qtengine-git
@@ -53,10 +60,11 @@ echo "  git clone https://github.com/caelestia-dots/caelestia.git ~/.local/share
 echo "  ~/.local/share/caelestia/install.fish"
 echo ""
 
-read -p "Reboot now? [y/N] " reboot_choice
+read -rp "Reboot now? [y/N] " reboot_choice
+
 if [[ "$reboot_choice" =~ ^[Yy]$ ]]; then
     echo "Rebooting system..."
-    reboot
+    sudo reboot
 else
     echo "You can reboot later when ready."
 fi
