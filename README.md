@@ -22,18 +22,16 @@ It prepares a minimal Arch system so you can directly clone and apply the **cael
 ### Option 1 — One-liner
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/caelestia-helper.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/Louchat/caelestia-helper.sh/main/caelestia-helper.sh | sudo bash
 ```
 
 ### Option 2 — Manual
 
 ```bash
-wget https://raw.githubusercontent.com/YOUR_USERNAME/YOUR_REPO/main/caelestia-helper.sh
+wget https://raw.githubusercontent.com/Louchat/caelestia-helper.sh/main/caelestia-helper.sh
 chmod +x caelestia-helper.sh
 sudo ./caelestia-helper.sh
 ```
-
-Replace `YOUR_USERNAME/YOUR_REPO` with your GitHub repository.
 
 ---
 
