@@ -25,13 +25,22 @@ It prepares a minimal Arch system so you can directly clone and apply the **cael
 curl -fsSL https://raw.githubusercontent.com/Louchat/caelestia-helper.sh/main/caelestia-helper.sh | sudo bash
 ```
 
-### Option 2 — Manual
+### Option 2 — Clone repository
+
+```bash
+git clone https://github.com/Louchat/caelestia-helper.sh
+cd caelestia-helper.sh
+sudo bash caelestia-helper.sh
+```
+### Option 3 — Manual
+```
 
 ```bash
 wget https://raw.githubusercontent.com/Louchat/caelestia-helper.sh/main/caelestia-helper.sh
 chmod +x caelestia-helper.sh
 sudo ./caelestia-helper.sh
 ```
+
 
 ---
 
